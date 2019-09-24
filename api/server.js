@@ -11,6 +11,4 @@ server.get('/', (req, res) => {
 
 
 
-// server.use('/menu/add', addRouter);
-
 module.exports = server;
