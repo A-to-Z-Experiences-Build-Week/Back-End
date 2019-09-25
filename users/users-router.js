@@ -11,6 +11,10 @@ router.get("/", (req, res) => {
 
 router.post("/signup", (req, res) => {
     const {username, password} = req.body
+})
+
+router.post("/signup", (req, res) => {
+    const {username, password} = req.body
     req.body.password = bcrypt.hashSync(password, 10)
 
     if (!username || !password) {
