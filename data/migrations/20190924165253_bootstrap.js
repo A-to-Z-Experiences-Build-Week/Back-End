@@ -9,14 +9,14 @@ exports.up = function(knex) {
         tbl.string('password', 64)
             .notNullable()
     })
-    .createTable('expriences', tbl => {
+    .createTable('experiences', tbl => {
       tbl.increments()
       tbl.integer('origin_user')
         .notNullable()
         .unsigned()
         .references('id')
         .inTable('users') 
-      tbl.integer('rateing')
+      tbl.integer('rating')
         .notNullable()
         .unsigned()
       tbl.string('name', 128)
@@ -24,7 +24,7 @@ exports.up = function(knex) {
         .unique()
       tbl.string('location', 128)
         .notNullable()
-      tbl.string('priceing', 32)
+      tbl.string('pricing', 32)
         .notNullable()
       tbl.string('description', 512)
         .notNullable()
@@ -34,6 +34,6 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('expriences')
+  return knex.schema.dropTableIfExists('experiences')
   return knex.schema.dropTableIfExists('users')
 };
