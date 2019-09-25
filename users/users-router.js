@@ -9,9 +9,6 @@ router.get("/", (req, res) => {
     res.send('i am of the existing')
 })
 
-router.post("/signup", (req, res) => {
-    const {username, password} = req.body
-})
 
 router.post("/signup", (req, res) => {
     const {username, password} = req.body
