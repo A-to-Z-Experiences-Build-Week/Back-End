@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const Users = require('./users-model')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const secrets = require('../config/secrets')
+
 
 router.get("/", (req, res) => {
     res.send('i am of the existing')
@@ -34,7 +37,9 @@ router.post("/login", (req, res) => {
             .first()
             .then(user => {
                 if (user && bcrypt.compareSync(password, user.password)) {
-                    res.status(200).json({message: 'yasssssss'})
+                    const token = generateToken(user)
+                    const loggedInUser = {username: user.username, id: user.id, token}
+                    res.status(200).json(loggedInUser)
                 } else {
                     res.status(401).json({error: 'You have either entered the wrong username or password'})
                 }
@@ -46,4 +51,17 @@ router.post("/login", (req, res) => {
     }
 })
 
+//create the token
+function generateToken(user) {
+    const payload = {
+      username: user.username
+    }
+    const options = {
+      expiresIn: '1d'
+    }
+    return jwt.sign(payload, secrets.jwtSecret, options)
+  }
+
+
+  
 module.exports = router
