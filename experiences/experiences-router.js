@@ -29,6 +29,20 @@ router.get("/:id", (req, res) => {
     }
 })
 
+router.get("/user/:userid", (req, res) => {
+    if (!req.params.userid) {
+        res.status(401).json({error: "you must give an user id to find by user id"})
+    } else {
+        Experiences.findByUser(req.params.userid)
+            .then(list => {
+                res.status(200).json(list)
+            })
+            .catch(error => {
+                res.status(500).json(error)
+            })
+    }
+})
+
 router.post("/newexp", (req, res) =>{
     const {
         origin_user,

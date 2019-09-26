@@ -16,6 +16,10 @@ function findBy(exp) {
     return data('experiences').where('id', exp)
 }
 
+function findByUser(user) {
+    return data('experiences').where('origin_user', user)
+}
+
 function find() {
     return data('experiences')
 }
