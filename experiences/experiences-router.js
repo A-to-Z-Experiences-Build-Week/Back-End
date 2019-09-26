@@ -1,7 +1,46 @@
 const router = require('express').Router();
 const Experiences = require('./experiences-model')
-router.get("/", (req, res) => {
+
+router.get("/sanity", (req, res) => {
     res.send('i am of the existing')
+})
+
+router.get("/", (req, res) => {
+    Experiences.find()
+        .then(list => {
+            res.status(200).json(list)
+        })
+        .catch(error => {
+            res.status(500).json({error: 'there was an issue retriveing the data from the server'})
+        })     
+})
+
+router.get("/:id", (req, res) => {
+    if (!req.params.id) {
+        res.status(401).json({error: "you must give an id to find by id"})
+    } else {
+        Experiences.findBy(req.params.id)
+            .then(list => {
+                res.status(200).json(list)
+            })
+            .catch(error => {
+                res.status(500).json(error)
+            })
+    }
+})
+
+router.get("/user/:userid", (req, res) => {
+    if (!req.params.userid) {
+        res.status(401).json({error: "you must give an user id to find by user id"})
+    } else {
+        Experiences.findByUser(req.params.userid)
+            .then(list => {
+                res.status(200).json(list)
+            })
+            .catch(error => {
+                res.status(500).json(error)
+            })
+    }
 })
 
 router.post("/newexp", (req, res) =>{
@@ -25,6 +64,38 @@ router.post("/newexp", (req, res) =>{
         .catch(error => {
             res.status(500).json(error)
         })
+    }
+})
+
+router.put("/:id", (req, res) => {
+    if (req.params.id) {
+        Experiences.update(req.body, req.params.id)
+            .then(response => {
+                Experiences.findBy(req.params.id)
+                    .then(exp => {
+                        res.status(200).json(exp)
+                    })
+                    .then(error => {
+                        res.status(500).json({error: 'there was an issue retriveing the updated item from the server'})
+                    })
+            })
+            .catch(error => {
+                res.status(500).json({error: 'there wan an issue updateing the data'})
+            })
+    }
+})
+
+router.delete("/:id", (req, res) => {
+    if (!req.params.id) {
+        res.status(401).json({error: "you must give an id to delete by id"})
+    } else {
+        Experiences.del(req.params.id)
+            .then(item => {
+                res.status(200).json(item)
+            })
+            .catch(error => {
+                res.status(500).json(error)
+            })
     }
 })
 
