@@ -11,7 +11,7 @@ module.exports = {
 
 
 async function add(exp) {
-    const [id] = await data('experiences').insert(exp)
+    const [id] = await data('experiences').insert(exp, 'id')
 }
 
 function findBy(exp) {
@@ -42,5 +42,5 @@ function update(newInfo, id) {
             "pricing": newInfo.pricing,
             "description": newInfo.description,
             "img_url": newInfo.img_url, 
-        })
+        }, 'id')
 }
