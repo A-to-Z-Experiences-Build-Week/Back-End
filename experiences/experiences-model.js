@@ -3,7 +3,8 @@ const data = require('../data/db-config')
 module.exports = {
     add,
     findBy,
-    find
+    find,
+    del,
 }
 
 
@@ -15,6 +16,12 @@ function findBy(exp) {
     return data('experiences').where('id', exp)
 }
 
-function find(exp) {
+function find() {
     return data('experiences')
+}
+
+function del(exp) {
+    return data('experiences')
+        .where('id', exp)
+        .del()
 }

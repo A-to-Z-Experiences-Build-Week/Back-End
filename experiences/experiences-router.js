@@ -53,4 +53,18 @@ router.post("/newexp", (req, res) =>{
     }
 })
 
+router.delete("/:id", (req, res) => {
+    if (!req.params.id) {
+        res.status(401).json({error: "you must give an id to delete by id"})
+    } else {
+        Experiences.del(req.params.id)
+            .then(item => {
+                res.status(200).json(item)
+            })
+            .catch(error => {
+                res.status(500).json(error)
+            })
+    }
+})
+
 module.exports = router
