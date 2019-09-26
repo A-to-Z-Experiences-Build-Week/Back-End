@@ -5,6 +5,8 @@ module.exports = {
     findBy,
     find,
     del,
+    findByUser,
+    update,
 }
 
 
@@ -28,4 +30,17 @@ function del(exp) {
     return data('experiences')
         .where('id', exp)
         .del()
+}
+
+function update(newInfo, id) {
+    return data('experiences')
+        .where('id', id)
+        .update({
+            "rating": newInfo.rating,
+            "name": newInfo.name,
+            "location": newInfo.location,
+            "pricing": newInfo.pricing,
+            "description": newInfo.description,
+            "img_url": newInfo.img_url, 
+        })
 }
