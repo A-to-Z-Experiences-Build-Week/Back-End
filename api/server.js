@@ -2,8 +2,8 @@ const express = require('express');
 const usersrouter = require('../users/users-router')
 const experiencesRouter = require('../experiences/experiences-router')
 const authenticate = require('../auth/auth-middleware')
-
-
+const helmet = require("helmet");
+const cors = require("cors");
 
 const server = express();
 
@@ -21,4 +21,4 @@ server.get('/', (req, res) => {
 
 module.exports = server;
 
-//test
+//yes
